@@ -1,0 +1,28 @@
+<%--
+    Ujian Akhir Semester - Pemrograman Web 2
+    Nama File  : header.jsp
+    Project    : ClientSiakad
+    Author     : Enggar(16.3.00008)-Ramadhan(16.3.00013)-Fikri(16.3.00017)
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Toko Snack Barokah</title>
+        <!-- CSS -->
+        <link href="css/css.css" rel="stylesheet" type="text/css" />
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="20; URL='index.jsp'" /> <!-- refresh page -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+   
+    <body>
+        <header >
+            <h1>Database Toko Snack Barokah</h1>
+        </header>
+        
+    </body>
+</html>

@@ -1,0 +1,45 @@
+/*
+    Ujian Akhir Semester - Pemrograman Web 2
+    Nama File  : snack.java
+    Project    : Siakad
+    Author     : Enggar(16.3.00008)-Ramadhan(16.3.00013)-Fikri(16.3.00017)
+*/
+
+package server.barokah;
+
+public class snack {
+    private int id_snack;
+    private String nama_snack, jenis_snack, supplier;
+
+    public int getId_snack() {
+        return id_snack;
+    }
+
+    public void setId_snack(int id_snack) {
+        this.id_snack = id_snack;
+    }
+
+    public String getNama_snack() {
+        return nama_snack;
+    }
+
+    public void setNama_snack(String nama_snack) {
+        this.nama_snack = nama_snack;
+    }
+
+    public String getJenis_snack() {
+        return jenis_snack;
+    }
+
+    public void setJenis_snack(String jenis_snack) {
+        this.jenis_snack = jenis_snack;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }   
+}

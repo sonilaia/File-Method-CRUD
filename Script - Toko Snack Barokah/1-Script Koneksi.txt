@@ -1,0 +1,36 @@
+/*
+    Ujian Akhir Semester - Pemrograman Web 2
+    Nama File  : KoneksiMySQL.java
+    Project    : Siakad
+    Author     : Enggar(16.3.00008)-Ramadhan(16.3.00013)-Fikri(16.3.00017)
+*/
+
+package server.barokah;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class KoneksiMySQL
+{
+    String driver = "com.mysql.jdbc.Driver";
+    String url = "jdbc:mysql://localhost:3306/db_snack";
+    String usern = "root";
+    String passw = "";
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
+    public Connection getCon()
+    {
+        try
+        {
+            Class.forName(driver);
+            con = DriverManager.getConnection(url, usern, passw);
+        }
+        catch(Exception ex) 
+        {
+            System.out.println(ex.getMessage());
+        }
+        return con;
+    }
+}

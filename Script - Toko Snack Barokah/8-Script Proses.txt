@@ -1,0 +1,76 @@
+<%--
+    Ujian Akhir Semester - Pemrograman Web 2
+    Nama File  : proses.jsp
+    Project    : ClientSiakad
+    Author     : Enggar(16.3.00008)-Ramadhan(16.3.00013)-Fikri(16.3.00017)
+--%>
+
+<!-- 
+Kerjakan Semua Prosesnya Disini 
+(Tambah Snack, Edit Snack, dan Hapus Snack)
+-->
+<div onchange="reload()">
+<%-- start web service invocation --%>
+<% 
+    try 
+    {
+	String act = request.getParameter("act");
+        
+        client.barokah.BarokahSnack service = new client.barokah.BarokahSnack();
+	client.barokah.TokoSnackBarokah port = service.getTokoSnackBarokahPort();
+        
+        //If Statement  untuk Proses CRUD
+        if(act.equals("tambah")) //Proses Tambah Snack
+        {
+            try 
+            {
+                int id_snack = Integer.valueOf(request.getParameter("id_snack"));
+                java.lang.String nama_snack = request.getParameter("nama_snack");
+                java.lang.String jenis_snack = request.getParameter("jenis_snack");
+                java.lang.String supplier = request.getParameter("supplier");
+                port.addSnack(id_snack, nama_snack, jenis_snack, supplier);
+
+                response.sendRedirect("index.jsp");
+            }
+            catch(Exception e){}
+        }
+        else if(act.equals("edit") ) //Proses Edit Snack
+        {
+            try 
+            {
+                int id_snack = Integer.valueOf(request.getParameter("id_snack"));
+                java.lang.String nama_snack = request.getParameter("nama_snack");
+                java.lang.String jenis_snack = request.getParameter("jenis_snack");
+                java.lang.String supplier = request.getParameter("supplier");
+                port.editSnack(id_snack, nama_snack, jenis_snack, supplier);
+
+                response.sendRedirect("index.jsp");
+            }
+            catch(Exception e){}
+        } 
+        else if(act.equals("hapus")) //Proses Hapus Snack
+        {
+            try 
+            {
+                int idSnack = Integer.valueOf(request.getParameter("id_snack")); 
+                port.delSnack(idSnack);
+
+                response.sendRedirect("index.jsp");
+            }
+            catch(Exception e){}
+        }
+        //Selesai If Statement untuk Proses CRUD
+    }
+    catch (Exception ex) 
+    {
+	{ out.print("<p style='font-size:20px; font-weight:bold; color:red;'>Gagal koneksi ke server!</p>"); }
+    }
+%>
+</div>
+<script>
+    function reload()
+    {
+        location.reload(true);
+    }
+</script>
+<%-- end web service invocation --%>

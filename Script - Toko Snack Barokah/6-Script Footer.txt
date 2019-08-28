@@ -1,0 +1,12 @@
+<%--
+    Ujian Akhir Semester - Pemrograman Web 2
+    Nama File  : footer.jsp
+    Project    : ClientSiakad
+    Author     : Enggar(16.3.00008)-Ramadhan(16.3.00013)-Fikri(16.3.00017)
+--%>
+
+        <footer>
+            Enggar_Ramadhan_Fikri &COPY; 2018
+        </footer>
+    </body>
+</html>

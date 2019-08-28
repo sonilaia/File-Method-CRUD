@@ -1,0 +1,179 @@
+/*
+    Ujian Akhir Semester - Pemrograman Web 2
+    Nama File  : TokoSnackBarokah.java
+    Project    : Siakad
+    Author     : Enggar(16.3.00008)-Ramadhan(16.3.00013)-Fikri(16.3.00017)
+*/
+
+package server.barokah;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+@WebService(serviceName = "BarokahSnack")
+public class TokoSnackBarokah {
+/*Panggil Koneksi MySQL*/
+KoneksiMySQL kon = new KoneksiMySQL();
+Connection con;
+PreparedStatement ps;
+ResultSet rs;
+/*Selesai Panggil Koneksi MySQL*/
+/*-----------------------------------------------------------------------------------------------------*/
+/*Get Snack*/
+@WebMethod(operationName = "getSnack")
+public List getSnack(
+@WebParam(name = "id_snack") int id_snack,
+        
+@WebParam(name = "nama_snack") String nama_snack,
+@WebParam(name = "jenis_snack") String jenis_snack,
+@WebParam(name = "supplier") String supplier,
+@WebParam(name = "cat") String cat,
+@WebParam(name = "q") String q ) 
+{
+    List snack = new ArrayList();
+    try 
+    {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_snack", "root", "");
+        Statement st = conn.createStatement();
+        con = kon.getCon();
+        
+        ps = con.prepareStatement("select * from tb_snack where id_snack=?");
+        ps.setInt(1, id_snack);
+        ResultSet rst = ps.executeQuery();
+        while (rst.next()) 
+        {
+            snack.add("<div class=\"form-group\">\n" +
+            " <label class=\"control-label col-sm-1\">Id Snack</label>\n" +
+            " <div class=\"col-sm-2\">\n" +
+            " <input type=\"text\" class=\"form-control\" name=\"id_snack\" value=\""+rst.getInt("id_snack")+"\" readonly=\"true\">\n" +
+            " </div>\n" +
+            " </div>\n" +
+            " \n" +
+            " <div class=\"form-group\">\n" +
+            " <label class=\"control-label col-sm-1\">Nama Snack</label>\n" +
+            " <div class=\"col-sm-2\">\n" +
+            " <input type=\"text\" class=\"form-control\" name=\"nama_snack\" value=\""+rst.getString("nama_snack")+"\">\n" +
+            " </div>\n" +
+            " </div>\n" +
+            " \n" +
+            " <div class=\"form-group\">\n" +
+            " <label class=\"control-label col-sm-1\">Jenis Snack</label>\n" +
+            " <div class=\"col-sm-2\">\n" +
+            " <input type=\"text\" class=\"form-control\" name=\"jenis_snack\" value=\""+rst.getString("jenis_snack")+"\">\n" +
+            " </div>\n" +
+            " </div>\n" +
+            " \n" +
+            " <div class=\"form-group\">\n" +
+            " <label class=\"control-label col-sm-1\">Supplier</label>\n" +
+            " <div class=\"col-sm-2\">\n" +
+            " <input type=\"text\" class=\"form-control\" name=\"supplier\" value=\""+rst.getString("supplier")+"\">\n" +
+            " </div>\n" +
+            " </div>\n" +
+            " \n" +
+            " </div>");
+        }      
+    }
+    catch (Exception ex) 
+    {
+        System.out.println(ex.getMessage());
+    }
+    return snack;
+}
+/*Selesai Get Snack*/
+/*-----------------------------------------------------------------------------------------------------*/
+/*Selesai Tambah Snack*/
+@WebMethod(operationName = "addSnack")
+public void addSnack(
+@WebParam(name = "id_snack") int id_snack,
+@WebParam(name = "nama_snack") String nama_snack,
+@WebParam(name = "jenis_snack") String jenis_snack,
+@WebParam(name = "supplier") String supplier ) 
+{
+    try
+    {
+        con = kon.getCon();
+        ps = con.prepareStatement("insert into tb_snack value (?,?,?,?)");
+        ps.setInt(1, id_snack);
+        ps.setString(2, nama_snack);
+        ps.setString(3, jenis_snack);
+        ps.setString(4, supplier);
+        ps.executeUpdate();
+        } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+/*Selesai Tambah Snack*/
+/*-----------------------------------------------------------------------------------------------------*/
+/*Hapus Snack*/
+@WebMethod(operationName = "delSnack")
+public void delSnack(
+@WebParam(name = "id_snack") int id_snack) 
+{
+    try
+    {
+        con = kon.getCon();
+        ps = con.prepareStatement("delete from tb_snack where id_snack = ?");
+        ps.setInt(1, id_snack);
+        ps.executeUpdate();
+        } catch (Exception e) {
+        System.out.println("Failed to remove student because " + e.toString());
+    }
+}
+/*Selesai Hapus Snack*/
+/*-----------------------------------------------------------------------------------------------------*/
+/*Edit Snack*/
+@WebMethod(operationName = "editSnack")
+public void editSnack(
+@WebParam(name = "id_snack") int id_snack,
+@WebParam(name = "nama_snack") String nama_snack,
+@WebParam(name = "jenis_snack") String jenis_snack,
+@WebParam(name = "supplier") String supplier)
+{
+    try 
+    {
+        con = kon.getCon();
+        ps = con.prepareStatement("update tb_snack set nama_snack=?,jenis_snack=?,supplier=? where id_snack=?");
+        ps.setString(1, nama_snack);
+        ps.setString(2, jenis_snack);
+        ps.setString(3, supplier);
+        ps.setInt(4, id_snack);
+        ps.executeUpdate();
+        } catch (Exception e) {
+        System.out.println("Failed to edit student because " + e.toString());
+    }
+}
+/*Selesai Edit Snack*/
+/*-----------------------------------------------------------------------------------------------------*/
+@WebMethod(operationName = "tampilSnack")
+public List tampilSnack() {
+    List daftar = new ArrayList();
+    String sql_daftar = "select * from tb_snack";
+    try {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_snack", "root", "");
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(sql_daftar);
+       
+        while (rs.next())
+        {
+            daftar.add("<td>" + rs.getInt("id_snack") + "</td>"
+                    + "<td>" + rs.getString("nama_snack") + "</td>"
+                    + "<td>" + rs.getString("jenis_snack") + "</td>"
+                    + "<td>" + rs.getString("supplier")+"</td>");
+        }
+        con.close();
+        } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        }
+        return daftar;
+    }
+}
